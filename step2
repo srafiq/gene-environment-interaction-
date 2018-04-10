@@ -1,0 +1,29 @@
+## Job script for Imperial HPC cluster
+## Run models for each cancer
+#! /bin/sh
+
+#walltime
+#PBS -q med-bio
+#
+
+
+#PBS -l walltime=6:00:00
+
+
+
+## for each dataset ask for one node with 12 cpus, and 250gb of memory 
+#PBS -l select=1:ncpus=16:mem=120gb
+
+###make ped file in folder before analysis
+module load R
+module load ###plink
+
+		
+	
+
+Rscript --no-restore --no-save -e 'source("chr1_interaction_1.R", echo=TRUE)'
+
+
+rm /work/srafiq15/interaction_analysis_r/file1.csv
+
+rm /work/srafiq15/interaction_analysis_r/biobank_chr1_part1.*

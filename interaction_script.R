@@ -1,8 +1,9 @@
 library(gdata)
 library(car)
+ library(data.table)
 
 
-ped <-read.table(file="biobank_chr1_part1.ped")
+ped <- fread(file="biobank_chr1_part113.ped", data.table=FALSE)
 
 
 genos<-ped[, -c(1:5)]
@@ -30,7 +31,7 @@ genos_mod<-as.matrix(read.table("genos_modified", header=TRUE, sep=" "))
 genos_mod<-as.matrix(genos_mod)
 
 
-snps<-read.table(file="biobank_chr22_part1.map")
+snps<-read.table(file="biobank_chr1_part113.map")
 
 
 snps_ids<-snps$V2
@@ -65,7 +66,7 @@ pheno<-read.table(file="pheno_final.txt", header=TRUE)
 file1<-merge(pheno, genos_ready, by="ids")
 
 
-write.csv(file1,file="file1.csv")
+write.csv(file1,file="file113.csv")
 
 
 
@@ -74,19 +75,19 @@ write.csv(file1,file="file1.csv")
 
 library(lmtest)
 
-data<-read.csv(file="file1.csv", header=T, sep=",")
+data<-read.csv(file="file113.csv", header=T, sep=",")
 
-data[is.na(data)]=-1
+data[#is.na(data)]=-1
 
 
 
 p_values=c()
-for( i in 5:ncol(data))
+for( i in 8:ncol(data))
 {
-  model1<-glm(data$mi~data[,colnames(data)[i]]+data$dash, data=data,na.action = na.exclude )
+  model1<-glm(data$mi~data[,colnames(data)[i]]+data$dash+data$age+data$sex+data$pc1+data$pc2+data$pc3+data$pc4+data$pc5, data=data,na.action = na.exclude )
   temp=data
   data["IxDASH"]=data$dash*data[,colnames(data)[i]]
-  model2=glm(data$mi~ data[,colnames(data)[i]]+data$dash+data$IxDASH,na.action = na.exclude)
+  model2=glm(data$mi~ data[,colnames(data)[i]]+data$dash+data$age+data$sex+data$pc1+data$pc2+data$pc3+data$pc4+data$pc5+data$IxDASH,na.action = na.exclude)
   data=temp
   print(lrtest(model2,model1))
   model=lrtest(model2,model1)
@@ -95,17 +96,22 @@ for( i in 5:ncol(data))
   
   
 }
-treshold=0.05
+treshold=0.0000001
 idx=which(p_values<treshold)
 #idx  are    the ,,i''s  where    p_values  are smaller  then  treshold
 print(idx)
-file=as.data.frame(cbind(colnames(data[5:ncol(data)])[idx],as.numeric(p_values[idx])))
+file=as.data.frame(cbind(colnames(data[8:ncol(data)])[idx],as.numeric(p_values[idx])))
  
 colnames(file)=c("Predictor","Corresponding p-value")
-write.csv(file,'chr1_1.csv',row.names = F)
+write.csv(file,'chr1_113.csv',row.names = F)
 
 q()
 n
+
+
+
+  
+
 
 
 

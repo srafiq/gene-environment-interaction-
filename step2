@@ -1,5 +1,5 @@
 ## Job script for Imperial HPC cluster
-## Run models for each cancer
+## Run models
 #! /bin/sh
 
 #walltime

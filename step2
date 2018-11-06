@@ -21,9 +21,6 @@ module load ###plink
 		
 	
 
-Rscript --no-restore --no-save -e 'source("chr1_interaction_1.R", echo=TRUE)'
+Rscript --no-restore --no-save -e 'source("chrxxxx.R", echo=TRUE)'
 
 
-rm /work/srafiq15/interaction_analysis_r/file1.csv
-
-rm /work/srafiq15/interaction_analysis_r/biobank_chr1_part1.*

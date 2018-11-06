@@ -3,7 +3,7 @@ library(car)
  library(data.table)
 
 
-ped <- fread(file="biobank_chr1_part113.ped", data.table=FALSE)
+ped <- fread(file="biobank_chrxxxx.ped", data.table=FALSE)
 
 
 genos<-ped[, -c(1:5)]
@@ -31,7 +31,7 @@ genos_mod<-as.matrix(read.table("genos_modified", header=TRUE, sep=" "))
 genos_mod<-as.matrix(genos_mod)
 
 
-snps<-read.table(file="biobank_chr1_part113.map")
+snps<-read.table(file="biobank_chrxxxx.map")
 
 
 snps_ids<-snps$V2
@@ -56,7 +56,7 @@ genos_ready<-cbind(ids, genos_mod)
 
 ###merge with phenotype data
 
-pheno<-read.table(file="pheno_final.txt", header=TRUE)
+pheno<-read.table(file="pheno.txt", header=TRUE)
 
 
 
@@ -66,7 +66,7 @@ pheno<-read.table(file="pheno_final.txt", header=TRUE)
 file1<-merge(pheno, genos_ready, by="ids")
 
 
-write.csv(file1,file="file113.csv")
+write.csv(file1,file="filexxxx.csv")
 
 
 
@@ -75,7 +75,7 @@ write.csv(file1,file="file113.csv")
 
 library(lmtest)
 
-data<-read.csv(file="file113.csv", header=T, sep=",")
+data<-read.csv(file="filexxxx.csv", header=T, sep=",")
 
 data[#is.na(data)]=-1
 
@@ -103,7 +103,7 @@ print(idx)
 file=as.data.frame(cbind(colnames(data[8:ncol(data)])[idx],as.numeric(p_values[idx])))
  
 colnames(file)=c("Predictor","Corresponding p-value")
-write.csv(file,'chr1_113.csv',row.names = F)
+write.csv(file,'chrxxxx.csv',row.names = F)
 
 q()
 n

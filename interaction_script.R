@@ -3,7 +3,7 @@ library(car)
  library(data.table)
 
 
-ped <- fread(file="biobank_chrxxxx.ped", data.table=FALSE)
+ped <- fread(file="chrxxxx.ped", data.table=FALSE)
 
 
 genos<-ped[, -c(1:5)]
@@ -31,7 +31,7 @@ genos_mod<-as.matrix(read.table("genos_modified", header=TRUE, sep=" "))
 genos_mod<-as.matrix(genos_mod)
 
 
-snps<-read.table(file="biobank_chrxxxx.map")
+snps<-read.table(file="chrxxxx.map")
 
 
 snps_ids<-snps$V2
